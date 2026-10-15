@@ -1,12 +1,11 @@
-# utils.py
 import configparser
 from pathlib import Path
 from mssql_python import connect as mssql_connect
 from psycopg2 import connect as pg_connect
 
 def get_project_root() -> Path:
-    """Retorna o diretório raiz do projeto baseado na localização atual."""
-    return Path.cwd().parent
+    """Retorna o diretório raiz do projeto."""
+    return Path(__file__).resolve().parent.parent
 
 def load_config(conf_filename: str = "pipeline.conf") -> configparser.ConfigParser:
     """Carrega o arquivo de configuração centralizado do pipeline."""
