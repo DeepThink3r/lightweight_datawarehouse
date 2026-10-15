@@ -16,7 +16,7 @@ def task_staging_employees():
         output_path=None,  # Salva no lixo/temporário do sistema
     )
 
-@flow(name="Pipeline DW", log_prints=True)
+@flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
     task_staging_customers()
