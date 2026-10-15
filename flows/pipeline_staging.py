@@ -23,12 +23,28 @@ def task_staging_products():
         output_path=None,
     )
 
+@task(name="1. executar staging.region (Azure -> Postgres)", retries=1)
+def task_staging_region():
+        pm.execute_notebook(
+        input_path="tasks/ext_region.ipynb",
+        output_path=None,
+    )
+
+@task(name="1. executar staging.territories (Azure -> Postgres)", retries=1)
+def task_staging_territories():
+        pm.execute_notebook(
+        input_path="tasks/ext_territories.ipynb",
+        output_path=None,
+    )
+
 @flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
     task_staging_customers()
     task_staging_employees()
     task_staging_products()
+    task_staging_region()
+    task_staging_territories()
 
 if __name__ == "__main__":
     pipeline_notebook_dw()
