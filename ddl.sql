@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS staging.customers (
 	origem varchar,
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
-WITH (columnar.compression = zstd);
+WITH (columnar.compression = zstd)
 
 
 CREATE TABLE IF NOT EXISTS staging.employees (
@@ -73,6 +73,15 @@ CREATE TABLE IF NOT EXISTS staging.territories (
 	TerritoryID VARCHAR,
 	TerritoryDescription VARCHAR,
 	RegionID VARCHAR,
+	origem VARCHAR,
+	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) USING columnar
+WITH (columnar.compression = zstd)
+
+
+CREATE TABLE IF NOT EXISTS staging.employeeterritories (
+	EmployeeID VARCHAR,
+	TerritoryID VARCHAR,
 	origem VARCHAR,
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
