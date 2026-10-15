@@ -4,12 +4,9 @@ import tempfile
 
 @task(name="1. executar staging (Azure -> Postgres)", retries=1)
 def task_staging():
-    with tempfile.NamedTemporaryFile(suffix=".ipynb", delete=False) as temp:
-        output_path = temp.name
-
         pm.execute_notebook(
-        input_path="tasks/tst.extracao.ipynb",
-        output_path=output_path,  # Salva no lixo/temporário do sistema
+        input_path="tasks/ext_cliente.ipynb",
+        output_path=None,  # Salva no lixo/temporário do sistema
     )
 
 @flow(name="Pipeline DW", log_prints=True)
