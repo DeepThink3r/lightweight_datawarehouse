@@ -95,3 +95,13 @@ CREATE TABLE IF NOT EXISTS staging.shippers (
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
 WITH (columnar.compression = zstd)
+
+CREATE TABLE IF NOT EXISTS staging.categories (
+	CategoryID VARCHAR,
+	CategoryName VARCHAR,
+	Description VARCHAR,
+	Picture VARCHAR,
+	origem VARCHAR,
+	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) USING columnar
+WITH (columnar.compression = zstd)
