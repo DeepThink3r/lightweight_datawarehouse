@@ -1,6 +1,6 @@
 from prefect import flow, task
 import papermill as pm
-import tempfile
+
 
 @task(name="1. executar staging.customers (Azure -> Postgres)", retries=1)
 def task_staging_customers():
@@ -44,6 +44,13 @@ def task_staging_employeeterritories():
         output_path=None,
     )
 
+@task(name="1. executar staging.shippers (Azure -> Postgres)", retries=1)
+def task_staging_shippers():
+        pm.execute_notebook(
+        input_path="tasks/ext_shippers.ipynb",
+        output_path=None,
+    )
+
 @flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
@@ -53,6 +60,7 @@ def pipeline_notebook_dw():
     task_staging_region()
     task_staging_territories()
     task_staging_employeeterritories()
+    task_staging_shippers()
 
 if __name__ == "__main__":
     pipeline_notebook_dw()
