@@ -125,3 +125,15 @@ CREATE TABLE IF NOT EXISTS staging.orders (
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
 WITH (columnar.compression = zstd)
+
+
+CREATE TABLE IF NOT EXISTS staging.order_details (
+	OrderID VARCHAR,
+	ProductID VARCHAR,
+	UnitPrice VARCHAR,
+	Quantity VARCHAR,
+	Discount VARCHAR,
+	origem VARCHAR,
+	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) USING columnar
+WITH (columnar.compression = zstd)
