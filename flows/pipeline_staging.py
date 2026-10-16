@@ -58,6 +58,14 @@ def task_staging_categories():
         output_path=None,
     )
 
+@task(name="1. executar staging.orders (Azure -> Postgres)", retries=1)
+def task_staging_orders():
+        pm.execute_notebook(
+        input_path="tasks/ext_orders.ipynb",
+        output_path=None,
+    )
+
+
 @flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
@@ -69,6 +77,7 @@ def pipeline_notebook_dw():
     task_staging_employeeterritories()
     task_staging_shippers()
     task_staging_categories()
+    task_staging_orders()
 
 if __name__ == "__main__":
     pipeline_notebook_dw()
