@@ -2,6 +2,7 @@ import configparser
 from pathlib import Path
 from mssql_python import connect as mssql_connect
 from psycopg2 import connect as pg_connect
+from urllib.parse import quote_plus
 
 def get_project_root() -> Path:
     """Retorna o diretório raiz do projeto."""
@@ -28,15 +29,15 @@ def get_azure_connection(conf_filename: str = "pipeline.conf"):
     password = parser.get("azsql_config", "password")
     dbname = parser.get("azsql_config", "database")
     
-    connection_string = (
-        f"Server={hostname};"
-        f"Database={dbname};"
-        f"UID={username};"
-        f"PWD={password};"
-        "Encrypt=yes;"
-        "TrustServerCertificate=Yes;"   
-    )
-    return mssql_connect(connection_string)
+
+    #Formatando username e password para o padrão RFC-1738 para que caracteres especiais não quebrem o código
+
+    safe_user = quote_plus(username)
+    safe_pass = quote_plus(password)
+
+    azsql_url = (f"mssql://{safe_user}:{safe_pass}@{hostname}:1433/{dbname}"
+            "?encrypt=true&trustServerCertificate=true")
+    return azsql_url
 
 def get_postgres_connection(conf_filename: str = "pipeline.conf"):
     """Cria e retorna uma conexão ativa com o PostgreSQL/Citus local."""
@@ -47,6 +48,9 @@ def get_postgres_connection(conf_filename: str = "pipeline.conf"):
     password = parser.get("psql_config", "password")
     dbname = parser.get("psql_config", "database")
     port = parser.get("psql_config", "port")
+
+    safe_user = quote_plus(username)
+    safe_pass = quote_plus(password)
     
-    pg_url = f"postgresql://{username}:{password}@{hostname}:{port}/{dbname}"
-    return pg_connect(pg_url)
+    pg_url = f"postgresql://{safe_user}:{safe_pass}@{hostname}:{port}/{dbname}"
+    return pg_url
