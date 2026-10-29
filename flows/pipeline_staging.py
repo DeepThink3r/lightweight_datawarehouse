@@ -40,11 +40,6 @@ if __name__ == "__main__":
     ).deploy(
         name="deploy-staging-github",
         work_pool_name="default-docker-pool",
-        parameters={},
-        job_variables={
-            "env": {
-                "EXTRA_PIP_PACKAGES": "-r requirements.txt"
-            }
-        }
+        parameters={}
     )
     print("Deploy do pipeline de staging (branch dev) registrado com sucesso no Prefect Server!")
