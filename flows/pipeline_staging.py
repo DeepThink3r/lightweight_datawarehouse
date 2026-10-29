@@ -1,5 +1,5 @@
 from prefect import flow, task
-from prefect_github import GitHub
+from prefect_github import GitHubRepository
 import papermill as pm
 
 @task(retries=1, log_prints=True)
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         work_pool_name="default-docker-pool",       
     
     
-        github_storage = GitHub(
+        github_storage = GitHubRepository(
             repository="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
             reference="dev"
             ),
