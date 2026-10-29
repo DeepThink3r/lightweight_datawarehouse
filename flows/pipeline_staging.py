@@ -31,8 +31,8 @@ if __name__ == "__main__":
 
     pipeline_notebook_dw.from_source(
         source=GitHubRepository(
-            url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
-            branch="dev"
+            repository_url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
+            reference="dev"
         ),
         entrypoint="flows/pipeline_staging.py:pipeline_notebook_dw"
     ).deploy(
