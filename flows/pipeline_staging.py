@@ -1,5 +1,4 @@
 from prefect import flow, task
-from prefect.deployments import Deployment
 from prefect_github import GitHub
 import papermill as pm
 
@@ -29,23 +28,22 @@ def pipeline_notebook_dw():
     t_order_details = run_notebook_task.submit("staging.order_details", "tasks/ext_order_details.ipynb")
 
 if __name__ == "__main__":
-    github_storage = GitHub(
-        repository="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
-        reference="dev"
-        )
 
-    Deployment.build_from_flow(
-        flow=pipeline_notebook_dw,
+    pipeline_notebook_dw.deploy(
         name="deploy-staging-github",
-        work_pool_name="default-docker-pool",
-        storage=github_storage,
-        path="pipeline_staging.py",
+        work_pool_name="default-docker-pool",       
+    
+    
+        github_storage = GitHub(
+            repository="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
+            reference="dev"
+            ),
+
         job_variables={
             "env": {
                 "EXTRA_PIP_PACKAGES": "-r requirements.txt"
             }
-        },
-        apply=True
+        }
     )
     print("Deploy do pipeline de staging registrado com sucesso no Prefect Server!")       
     
