@@ -40,6 +40,11 @@ if __name__ == "__main__":
     ).deploy(
         name="deploy-staging-github",
         work_pool_name="default-docker-pool",
-        parameters={}
+        parameters={},
+        job_variables={
+            "env": {
+                "PREFECT_API_URL": "http://192.168.86.138:4200/api"
+            }
+        }
     )
-    print("Deploy do pipeline de staging (branch dev) registrado com sucesso no Prefect Server!")
+    print("Deploy do pipeline de staging (branch dev) registado com sucesso no Prefect Server!")
