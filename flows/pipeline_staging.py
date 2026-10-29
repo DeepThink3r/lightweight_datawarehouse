@@ -35,7 +35,7 @@ if __name__ == "__main__":
     
     
         github_storage = GitHubRepository(
-            repository="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
+            repository_url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
             reference="dev"
             ),
 
