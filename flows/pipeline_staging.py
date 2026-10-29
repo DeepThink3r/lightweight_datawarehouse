@@ -1,5 +1,5 @@
 from prefect import flow, task
-from prefect_github import GitRepository
+from prefect.runner.storage import GitRepository
 import papermill as pm
 
 @task(retries=1, log_prints=True)
