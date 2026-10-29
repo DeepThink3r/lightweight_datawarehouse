@@ -29,11 +29,13 @@ def pipeline_notebook_dw():
 
 if __name__ == "__main__":
 
+    source_repo = GitRepository(
+        url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
+        branch="dev"
+    )
+
     pipeline_notebook_dw.from_source(
-        source=GitHubRepository(
-            repository_url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
-            reference="dev"
-        ),
+        source=source_repo,
         entrypoint="flows/pipeline_staging.py:pipeline_notebook_dw"
     ).deploy(
         name="deploy-staging-github",
