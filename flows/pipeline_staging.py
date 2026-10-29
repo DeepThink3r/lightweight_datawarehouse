@@ -29,21 +29,20 @@ def pipeline_notebook_dw():
 
 if __name__ == "__main__":
 
-    pipeline_notebook_dw.deploy(
+    pipeline_notebook_dw.from_source(
+        source=GitHubRepository(
+            url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
+            branch="dev"
+        ),
+        entrypoint="flows/pipeline_staging.py:pipeline_notebook_dw"
+    ).deploy(
         name="deploy-staging-github",
-        work_pool_name="default-docker-pool",       
-    
-    
-        storage = GitHubRepository(
-            repository_url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
-            reference="dev"
-            ),
-
+        work_pool_name="default-docker-pool",
+        parameters={},
         job_variables={
             "env": {
                 "EXTRA_PIP_PACKAGES": "-r requirements.txt"
             }
         }
     )
-    print("Deploy do pipeline de staging registrado com sucesso no Prefect Server!")       
-    
+    print("Deploy do pipeline de staging (branch dev) registrado com sucesso no Prefect Server!")
