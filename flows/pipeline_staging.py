@@ -34,7 +34,7 @@ if __name__ == "__main__":
         work_pool_name="default-docker-pool",       
     
     
-        github_storage = GitHubRepository(
+        storage = GitHubRepository(
             repository_url="https://github.com/DeepThink3r/lightweight_datawarehouse.git",
             reference="dev"
             ),
