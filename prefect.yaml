@@ -12,6 +12,7 @@ pull:
   - prefect.deployments.steps.pip_install_requirements:
       directory: "{{ clone_step.directory }}"
       requirements_file: requirements.txt
+      stream_output: true
 
 deployments:
   - name: deploy-staging-github
