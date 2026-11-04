@@ -1,0 +1,27 @@
+name: lightweight_datawarehouse
+prefect-version: 3.0.0
+
+build: null
+push: null
+
+pull:
+  - prefect.deployments.steps.git_clone:
+      id: clone_step
+      repository: https://github.com/DeepThink3r/lightweight_datawarehouse.git
+      branch: dev
+  - prefect.deployments.steps.pip_install_requirements:
+      directory: "{{ clone_step.directory }}"
+      requirements_file: requirements.txt
+
+deployments:
+  - name: deploy-staging-github
+    version: null
+    tags: ["staging", "dw"]
+    description: "Pipeline de extração e carga da camada staging"
+    entrypoint: "flows/pipeline_staging.py:pipeline_staging_flow"
+    parameters: {}
+    work_pool:
+      name: default-docker-pool
+      job_variables:
+        env:
+          PYTHONPATH: "{{ clone_step.directory }}"
