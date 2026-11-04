@@ -1,31 +1,18 @@
 from prefect import flow, task
 from prefect.runner.storage import GitRepository
-import papermill as pm
 
-@task(retries=1, log_prints=True)
-def run_notebook_task(table_name: str, notebook_path: str):
-    print(f"Iniciando extração para: {table_name}...")
-    pm.execute_notebook(
-        input_path=notebook_path,
-        output_path=None,
-    )
-    print(f"Finalizado com sucesso: {table_name}!")
+# Rotinas
+from tasks.ext_categories import extract_categories
 
-
+# Tasks
+@task(name="staging.categories", retries=2, retry_delay_seconds=10, log_prints=True)
+def task_categories():
+    extract_categories()
 
 @flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
-    t_customers = run_notebook_task.submit("staging.customers", "tasks/ext_customers.ipynb")
-    t_employees = run_notebook_task.submit("staging.employees", "tasks/ext_employees.ipynb")
-    t_products = run_notebook_task.submit("staging.products", "tasks/ext_products.ipynb")
-    t_region = run_notebook_task.submit("staging.region", "tasks/ext_region.ipynb")
-    t_shippers = run_notebook_task.submit("staging.shippers", "tasks/ext_shippers.ipynb")
-    t_categories = run_notebook_task.submit("staging.categories", "tasks/ext_categories.ipynb")
-    t_territories = run_notebook_task.submit("staging.territories", "tasks/ext_territories.ipynb")
-    t_employeeterritories = run_notebook_task.submit("staging.employeeterritories", "tasks/ext_employeeterritories.ipynb")
-    t_orders = run_notebook_task.submit("staging.orders", "tasks/ext_orders.ipynb")
-    t_order_details = run_notebook_task.submit("staging.order_details", "tasks/ext_order_details.ipynb")
+    t_cat = task_categories.submit()
 
 if __name__ == "__main__":
 
