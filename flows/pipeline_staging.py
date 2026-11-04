@@ -38,6 +38,7 @@ if __name__ == "__main__":
         parameters={},
         job_variables={
             "env": {
+                "EXTRA_PIP_PACKAGES": "requirements.txt",
                 "PREFECT_API_URL": "http://192.168.86.138:4200/api"
             }
         }
