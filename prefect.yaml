@@ -14,9 +14,9 @@ pull:
       requirements_file: requirements.txt
       stream_output: true
 
+
 deployments:
   - name: deploy-staging-github
-    version: null
     tags: ["staging", "dw"]
     description: "Pipeline de extração e carga da camada staging"
     entrypoint: "flows/pipeline_staging.py:pipeline_notebook_dw"
