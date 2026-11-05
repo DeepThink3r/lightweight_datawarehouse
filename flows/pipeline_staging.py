@@ -71,14 +71,10 @@ def pipeline_notebook_dw():
     t_reg = task_region.submit()
     t_ship = task_shippers.submit()
     t_cat = task_categories.submit()
-
-    # 2. Dependentes
-    t_terr = task_territories.submit(wait_for=[t_reg])
-    t_emp_terr = task_employeeterritories.submit(wait_for=[t_emp, t_terr])
-
-    # 3. Fatos
-    t_ord = task_orders.submit(wait_for=[t_cust, t_emp, t_ship])
-    t_det = task_order_details.submit(wait_for=[t_ord, t_prod])
+    t_terr = task_territories.submit()
+    t_emp_terr = task_employeeterritories.submit()
+    t_ord = task_orders.submit()
+    t_det = task_order_details.submit()
 
 if __name__ == "__main__":
     pipeline_notebook_dw()
