@@ -16,10 +16,10 @@ def extract_categories() -> None:
 
 
     ext_query = """SELECT 
-                    CategoryID AS categoryid,
-                    CategoryName AS categoryname,
-                    Description AS description,
-                    Picture AS picture,
+                    CategoryID,
+                    CategoryName,
+                    Description,
+                    Picture,
                     'dbo.nowrthwind' AS origem,
                     current_timestamp AS ext_timestmp
                 FROM categories a
@@ -29,7 +29,16 @@ def extract_categories() -> None:
     df = pl.read_database_uri(query=ext_query, 
                             uri=uri_connection_azsql, 
                             engine="connectorx")
-    
+
+
+    df = df.rename({col: col.lower() for col in df.columns})
+
+  
+    df = df.with_columns(
+        pl.col("categoryid").cast(pl.Int64),
+        pl.col(pl.String).str.replace_all("\x00", "")
+    )
+
     #Limpa a tabela
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
