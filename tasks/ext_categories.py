@@ -44,6 +44,7 @@ def extract_categories() -> None:
         df.write_database(
             table_name='staging.categories',
             connection=conn,
+            engine="sqlalchemy",
             if_table_exists="append"
         )
 
