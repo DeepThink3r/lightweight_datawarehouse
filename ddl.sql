@@ -28,24 +28,23 @@ WITH (columnar.compression = zstd)
 
 
 CREATE TABLE IF NOT EXISTS staging.employees (
-	EmployeeIDI VARCHAR,
-	LastNameI VARCHAR,
-	FirstNameI VARCHAR,
-	TitleI VARCHAR,
-	TitleOfCourtesyI VARCHAR,
-	BirthDateI VARCHAR,
-	HireDateI VARCHAR,
-	AddressI VARCHAR,
-	CityI VARCHAR,
-	RegionI VARCHAR,
-	PostalCodeI VARCHAR,
-	CountryI VARCHAR,
-	HomePhoneI VARCHAR,
-	ExtensionI VARCHAR,
-	PhotoI VARCHAR,
-	NotesI VARCHAR,
-	ReportsToI VARCHAR,
-	PhotoPathI VARCHAR,
+	EmployeeID VARCHAR,
+	LastName VARCHAR,
+	FirstName VARCHAR,
+	Title VARCHAR,
+	TitleOfCourtesy VARCHAR,
+	BirthDate VARCHAR,
+	HireDate VARCHAR,
+	Address VARCHAR,
+	City VARCHAR,
+	Region VARCHAR,
+	PostalCode VARCHAR,
+	Country VARCHAR,
+	HomePhone VARCHAR,
+	Extension VARCHAR,
+	Notes VARCHAR,
+	ReportsTo VARCHAR,
+	PhotoPath VARCHAR,
 	origem varchar,
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
@@ -109,7 +108,6 @@ CREATE TABLE IF NOT EXISTS staging.categories (
 	CategoryID VARCHAR,
 	CategoryName VARCHAR,
 	Description VARCHAR,
-	Picture VARCHAR,
 	origem VARCHAR,
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
@@ -146,3 +144,6 @@ CREATE TABLE IF NOT EXISTS staging.order_details (
 	ext_timestmp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) USING columnar
 WITH (columnar.compression = zstd)
+
+
+select * from staging.territories
