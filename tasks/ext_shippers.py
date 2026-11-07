@@ -19,8 +19,7 @@ def extract_shippers() -> None:
     ext_query="""
                 SELECT 
                     a.*,
-                    'dbo.nowrthwind' as origem,
-                    current_timestamp as ext_timestmp
+                    'dbo.nowrthwind' as origem
                 FROM shippers a;
                 """
 
