@@ -7,7 +7,7 @@ if str(root_dir) not in sys.path:
 
 import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
-import psycopg2
+from adbc_driver_postgresql import dbapi
 
 def extract_categories() -> None:
 
@@ -35,7 +35,7 @@ def extract_categories() -> None:
     df = df.cast(pl.String)
 
     #Limpa a tabela
-    with psycopg2.connect(uri_connection_pgsql) as conn:
+    with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
             cur.execute("TRUNCATE TABLE staging.categories")
         conn.commit()
@@ -44,7 +44,7 @@ def extract_categories() -> None:
         df.write_database(
             table_name='staging.categories',
             connection=conn,
-            engine="sqlalchemy",
+            engine="adbc",
             if_table_exists="append"
         )
 
