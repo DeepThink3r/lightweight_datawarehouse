@@ -29,7 +29,7 @@ def extract_categories() -> None:
 
 
     df = df.rename({col: col.lower() for col in df.columns})
-    
+
     df = df.cast(pl.String)
 
     #Limpa a tabela
@@ -42,7 +42,7 @@ def extract_categories() -> None:
         df.write_database(
             table_name='staging.categories',
             connection=conn,
-            engine='adbc',
+            engine='sqlalchemy',
             if_table_exists="append"
         )
 
