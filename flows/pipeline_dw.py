@@ -67,15 +67,15 @@ def task_order_details():
 def pipeline_notebook_dw():
 
     t_cust = task_customers.submit()
-    t_emp = task_employees.submit()
-    t_prod = task_products.submit()
-    t_reg = task_region.submit()
-    t_ship = task_shippers.submit()
-    t_cat = task_categories.submit()
-    t_terr = task_territories.submit()
-    t_emp_terr = task_employeeterritories.submit()
-    t_ord = task_orders.submit()
-    t_det = task_order_details.submit()
+    #t_emp = task_employees.submit()
+    #t_prod = task_products.submit()
+    #t_reg = task_region.submit()
+    #t_ship = task_shippers.submit()
+    #t_cat = task_categories.submit()
+    #t_terr = task_territories.submit()
+    #t_emp_terr = task_employeeterritories.submit()
+    #t_ord = task_orders.submit()
+    #t_det = task_order_details.submit()
 
 if __name__ == "__main__":
     pipeline_notebook_dw()
