@@ -7,35 +7,46 @@ if str(root_dir) not in sys.path:
 
 import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
+from adbc_driver_postgresql import dbapi
 
 
 def extract_customers() -> None:
     uri_connection_azsql = get_azure_connection()
     uri_connection_pgsql = get_postgres_connection()
 
-
+    # Deixa o timestamp para o DEFAULT CURRENT_TIMESTAMP do Postgres
     ext_query = """
                 SELECT 
                     a.*,
-                    'dbo.nowrthwind' as origem,
-                    current_timestamp as ext_timestmp
+                    'dbo.northwind' AS origem
                 FROM Customers a;
                 """
-
 
     df = pl.read_database_uri(
         query=ext_query,
         uri=uri_connection_azsql,
         engine="connectorx"
+    )
+
+   
+    df = df.rename({col: col.lower() for col in df.columns})
+
+  
+    df = df.cast(pl.String)
+
+  
+    with dbapi.connect(uri_connection_pgsql) as conn:
+        with conn.cursor() as cur:
+            cur.execute("TRUNCATE TABLE staging.customers;")
+        conn.commit()
+
+        df.write_database(
+            table_name='staging.customers',
+            connection=conn,
+            engine="adbc",
+            if_table_exists="append"
         )
 
 
-    df.write_database(
-        table_name='staging.customers',
-        connection=uri_connection_pgsql,
-        engine="adbc",
-        if_table_exists="append"
-    )
-
-if '__name__' == '__main__':
+if __name__ == "__main__":
     extract_customers()
