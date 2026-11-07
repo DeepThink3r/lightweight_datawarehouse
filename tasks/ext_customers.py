@@ -34,7 +34,7 @@ def extract_customers() -> None:
         table_name='staging.customers',
         connection=uri_connection_pgsql,
         engine="adbc",
-        if_table_exists="replace"
+        if_table_exists="append"
     )
 
 if '__name__' == '__main__':
