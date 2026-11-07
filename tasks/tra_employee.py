@@ -18,7 +18,7 @@ def transform_employee() -> None:
     tb_insert = """
         INSERT INTO transformed.dim_employee (
             employeeid,
-            name,
+            (firstname ||' ' || lastname) as name,
             title
         )
         SELECT
