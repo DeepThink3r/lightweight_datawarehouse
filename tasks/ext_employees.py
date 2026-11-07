@@ -44,10 +44,8 @@ def extract_employees() -> None:
 
     df = df.rename({col: col.lower() for col in df.columns})
 
-    # 2. Converte tudo para string para caber nas colunas VARCHAR do staging
     df = df.cast(pl.String)
 
-    # 3. Truncate e carga direta via ADBC DBAPI
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
             cur.execute("TRUNCATE TABLE staging.employees;")
