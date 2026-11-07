@@ -26,5 +26,5 @@ deployments:
       job_variables:
         #auto_remove: true
         env:
-          PREFECT_API_URL: "http://192.168.86.138:4200/api"
+          PREFECT_API_URL: "{{ prefect.variables.url_api_interna }}"
           PYTHONPATH: "{{ clone_step.directory }}:${PYTHONPATH}"
