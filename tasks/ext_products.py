@@ -31,7 +31,7 @@ def extract_products() -> None:
     df = df.cast(pl.String)
 
     with dbapi.connect(uri_connection_pgsql) as conn:
-        with conn.cursor as cur:
+        with conn.cursor() as cur:
             cur.execute("TRUNCATE TABLE staging.products")
         conn.commit()
 
