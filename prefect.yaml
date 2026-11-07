@@ -19,7 +19,7 @@ deployments:
   - name: deploy-staging-github
     tags: ["staging", "dw"]
     description: "Pipeline de extração e carga da camada staging"
-    entrypoint: "flows/pipeline_staging.py:pipeline_notebook_dw"
+    entrypoint: "flows/pipeline_dw.py:pipeline_notebook_dw"
     parameters: {}
     work_pool:
       name: default-docker-pool
