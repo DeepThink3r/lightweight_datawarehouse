@@ -33,7 +33,7 @@ def extract_employees() -> None:
                     ExtensionI,
                     NotesI,
                     ReportsToI,
-                    PhotoPathI*,
+                    PhotoPathI,
                     'dbo.nowrthwind' as origem
                 FROM employees a;
                 """
