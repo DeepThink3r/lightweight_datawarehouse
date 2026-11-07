@@ -16,13 +16,10 @@ def extract_categories() -> None:
 
 
     ext_query = """SELECT 
-                    CategoryID,
-                    CategoryName,
-                    Description,
-                    Picture,
+                    c.*,
                     'dbo.nowrthwind' AS origem,
                     current_timestamp AS ext_timestmp
-                FROM categories
+                FROM categories c
                 """
 
 
@@ -32,7 +29,8 @@ def extract_categories() -> None:
 
 
     df = df.rename({col: col.lower() for col in df.columns})
-
+    
+    df = df.cast(pl.String)
 
     #Limpa a tabela
     with psycopg2.connect(uri_connection_pgsql) as conn:
