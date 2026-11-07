@@ -16,10 +16,12 @@ def extract_categories() -> None:
 
 
     ext_query = """SELECT 
-                    c.*,
+                    CategoryID,
+                    CategoryName,
+                    Description,
                     'dbo.nowrthwind' AS origem,
                     current_timestamp AS ext_timestmp
-                FROM categories c
+                FROM categories
                 """
 
 
@@ -42,7 +44,6 @@ def extract_categories() -> None:
         df.write_database(
             table_name='staging.categories',
             connection=conn,
-            engine='sqlalchemy',
             if_table_exists="append"
         )
 
