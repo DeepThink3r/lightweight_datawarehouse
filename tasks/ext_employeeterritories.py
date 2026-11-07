@@ -24,12 +24,11 @@ def extract_employeeterritories() -> None:
                 FROM EmployeeTerritories a;
                 """
 
+    df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
+
     df = df.rename({col: col.lower() for col in df.columns})
 
     df = df.cast(pl.String)
-
-    df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
-
 
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
