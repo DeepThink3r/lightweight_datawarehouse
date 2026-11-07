@@ -11,7 +11,7 @@ from prefect import flow, task
 from tasks.tra_employee import transform_employee
 
 
-@task(name='transformed.employee', retry=2, retry_delay_seconds=10, log_prints=True)
+@task(name='transformed.employee', retries=2, retry_delay_seconds=10, log_prints=True)
 def task_dim_employee():
     transform_employee()
 
