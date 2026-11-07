@@ -36,7 +36,7 @@ def extract_territories() -> None:
 
         df.write_database(
             table_name='staging.territories',
-            connection=uri_connection_pgsql,
+            connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
