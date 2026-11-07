@@ -19,7 +19,7 @@ def extract_products() -> None:
     ext_query="""
                 SELECT 
                     a.*,
-                    'dbo.nowrthwind' as origem
+                    'dbo.nowrthwind' as origem,
                 FROM products a;
                 """
 
