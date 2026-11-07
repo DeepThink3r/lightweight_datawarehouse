@@ -7,7 +7,7 @@ if str(root_dir) not in sys.path:
 
 import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
-
+from adbc_driver_postgresql import dbapi
 
 def extract_employees() -> None:
 
@@ -18,8 +18,7 @@ def extract_employees() -> None:
     ext_query="""
                 SELECT 
                     a.*,
-                    'dbo.nowrthwind' as origem,
-                    current_timestamp as ext_timestmp
+                    'dbo.nowrthwind' as origem
                 FROM employees a;
                 """
 
@@ -27,12 +26,24 @@ def extract_employees() -> None:
     df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
 
 
-    df.write_database(
-        table_name='staging.employees',
-        connection=uri_connection_pgsql,
-        engine="adbc",
-        if_table_exists="replace"
-    )
+    df = df.rename({col: col.lower() for col in df.columns})
 
-if '__name__' == '__main__':
-    extract_employees() 
+    # 2. Converte tudo para string para caber nas colunas VARCHAR do staging
+    df = df.cast(pl.String)
+
+    # 3. Truncate e carga direta via ADBC DBAPI
+    with dbapi.connect(uri_connection_pgsql) as conn:
+        with conn.cursor() as cur:
+            cur.execute("TRUNCATE TABLE staging.employees;")
+        conn.commit()
+
+        df.write_database(
+            table_name='staging.employees',
+            connection=conn,
+            engine="adbc",
+            if_table_exists="append"
+        )
+
+
+if __name__ == "__main__":
+    extract_employees()
