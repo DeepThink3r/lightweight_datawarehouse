@@ -13,9 +13,9 @@ def transform_employee() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = """TRUNCATE TABLE transformed.dim_employee;"""
+    tb_truncate = "TRUNCATE TABLE transformed.dim_employee;"
 
-    tb_insert = """"
+    tb_insert = """
         INSERT INTO transformed.dim_employee (
             employeeid,
             name,
@@ -37,5 +37,5 @@ def transform_employee() -> None:
 
         conn.commit()
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
     transform_employee()
