@@ -23,9 +23,9 @@ def transform_employee() -> None:
         )
         SELECT
             employeeid,
-            firstname ||' ' || lastname) as name,
+            firstname || ' ' || lastname AS name,
             title
-        FROM staging.employees
+        FROM staging.employees;
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:
