@@ -66,12 +66,12 @@ def task_order_details():
 @flow(name="Pipeline staging", log_prints=True)
 def pipeline_notebook_dw():
 
-    #t_cust = task_customers.submit()
+    t_cust = task_customers.submit()
     #t_emp = task_employees.submit()
     #t_prod = task_products.submit()
     #t_reg = task_region.submit()
     #t_ship = task_shippers.submit()
-    t_cat = task_categories.submit()
+    #t_cat = task_categories.submit()
     #t_terr = task_territories.submit()
     #t_emp_terr = task_employeeterritories.submit()
     #t_ord = task_orders.submit()
