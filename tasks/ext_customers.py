@@ -48,5 +48,5 @@ def extract_customers() -> None:
         )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     extract_customers()
