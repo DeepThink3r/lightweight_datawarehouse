@@ -7,7 +7,7 @@ if str(root_dir) not in sys.path:
 
 import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
-from adbc_driver_postgresql import dbapi
+import psycopg2
 
 def extract_categories() -> None:
 
@@ -22,7 +22,7 @@ def extract_categories() -> None:
                     Picture,
                     'dbo.nowrthwind' AS origem,
                     current_timestamp AS ext_timestmp
-                FROM categories a
+                FROM categories
                 """
 
 
@@ -33,14 +33,9 @@ def extract_categories() -> None:
 
     df = df.rename({col: col.lower() for col in df.columns})
 
-  
-    df = df.with_columns(
-        pl.col("categoryid").cast(pl.Int64),
-        pl.col(pl.String).str.replace_all("\x00", "")
-    )
 
     #Limpa a tabela
-    with dbapi.connect(uri_connection_pgsql) as conn:
+    with psycopg2.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
             cur.execute("TRUNCATE TABLE staging.categories")
         conn.commit()
