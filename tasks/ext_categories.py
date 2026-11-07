@@ -16,10 +16,13 @@ def extract_categories() -> None:
 
 
     ext_query = """SELECT 
-                    a.*,
-                    'dbo.nowrthwind' as origem,
-                    current_timestamp as ext_timestmp
-                FROM categories a;
+                    CategoryID AS categoryid,
+                    CategoryName AS categoryname,
+                    Description AS description,
+                    Picture AS picture,
+                    'dbo.nowrthwind' AS origem,
+                    current_timestamp AS ext_timestmp
+                FROM categories a
                 """
 
 
