@@ -8,7 +8,7 @@ pull:
   - prefect.deployments.steps.git_clone:
       id: clone_step
       repository: https://github.com/DeepThink3r/lightweight_datawarehouse.git
-      branch: dev
+      branch: main
   - prefect.deployments.steps.pip_install_requirements:
       directory: "{{ clone_step.directory }}"
       requirements_file: requirements.txt
