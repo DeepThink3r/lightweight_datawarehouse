@@ -17,7 +17,7 @@ def extract_employees() -> None:
 
     ext_query="""
                 SELECT 
-                    EmployeeIDI,
+                    EmployeeID,
                     LastNameI,
                     FirstNameI,
                     TitleI,
