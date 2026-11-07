@@ -18,12 +18,12 @@ def transform_employee() -> None:
     tb_insert = """
         INSERT INTO transformed.dim_employee (
             employeeid,
-            (firstname ||' ' || lastname) as name,
+            name,
             title
         )
         SELECT
             employeeid,
-            name,
+            firstname ||' ' || lastname) as name,
             title
         FROM staging.employees
     """
