@@ -77,5 +77,23 @@ def pipeline_notebook_staging():
     t_ord = task_orders.submit()
     t_det = task_order_details.submit()
 
+    # Resolução de erro
+
+    features = [
+        t_cust,
+        t_emp,
+        t_prod,
+        t_reg,
+        t_ship,
+        t_cat,
+        t_terr,
+        t_emp_terr,
+        t_ord,
+        t_det
+    ]
+
+    for future in features:
+        future.result()
+
 if __name__ == "__main__":
     pipeline_notebook_staging()
