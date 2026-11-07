@@ -27,4 +27,4 @@ deployments:
         #auto_remove: true
         env:
           PREFECT_API_URL: "http://192.168.86.138:4200/api"
-          PYTHONPATH: "{{ clone_step.directory }}"
+          PYTHONPATH: "{{ clone_step.directory }}:${PYTHONPATH}"
