@@ -19,8 +19,7 @@ def extract_categories() -> None:
                     CategoryID,
                     CategoryName,
                     Description,
-                    'dbo.nowrthwind' AS origem,
-                    current_timestamp AS ext_timestmp
+                    'dbo.nowrthwind' AS origem
                 FROM categories
                 """
 
