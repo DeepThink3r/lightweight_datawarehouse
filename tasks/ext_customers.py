@@ -23,7 +23,11 @@ def extract_customers() -> None:
                 """
 
 
-    df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
+    df = pl.read_database_uri(
+        query=ext_query,
+        uri=uri_connection_azsql,
+        engine="connectorx"
+        )
 
 
     df.write_database(
