@@ -17,7 +17,23 @@ def extract_customers() -> None:
     # Deixa o timestamp para o DEFAULT CURRENT_TIMESTAMP do Postgres
     ext_query = """
                 SELECT 
-                    a.*,
+                    EmployeeIDI,
+                    LastNameI,
+                    FirstNameI,
+                    TitleI,
+                    TitleOfCourtesyI,
+                    BirthDateI,
+                    HireDateI,
+                    AddressI,
+                    CityI,
+                    RegionI,
+                    PostalCodeI,
+                    CountryI,
+                    HomePhoneI,
+                    ExtensionI,
+                    NotesI,
+                    ReportsToI,
+                    PhotoPathI,
                     'dbo.northwind' AS origem
                 FROM Customers a;
                 """
