@@ -31,15 +31,15 @@ def extract_categories() -> None:
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
             cur.execute("TRUNCATE TABLE staging.categories")
-        conn.comit()
-        
+        conn.commit()
+
     # Carrega os dados
-    df.write_database(
-        table_name='staging.categories',
-        connection=uri_connection_pgsql,
-        engine='adbc',
-        if_table_exists="append"
-    )
+        df.write_database(
+            table_name='staging.categories',
+            connection=conn,
+            engine='adbc',
+            if_table_exists="append"
+        )
 
 if __name__ == "__main__":
     extract_categories()
