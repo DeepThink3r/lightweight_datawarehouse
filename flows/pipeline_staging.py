@@ -7,7 +7,6 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from prefect import flow, task
-from prefect.runner.storage import GitRepository
 
 # Rotinas
 from tasks.ext_categories import extract_categories
@@ -21,7 +20,8 @@ from tasks.ext_employeeterritories import extract_employeeterritories
 from tasks.ext_orders import extract_orders
 from tasks.ext_order_details import extract_order_details
 
-# Tasks Staging
+
+#------TASKS STAGING------
 
 @task(name="staging.customers", retries=2, retry_delay_seconds=10, log_prints=True)
 def task_customers():
@@ -64,7 +64,7 @@ def task_order_details():
     extract_order_details()
 
 @flow(name="Pipeline staging", log_prints=True)
-def pipeline_notebook_dw():
+def pipeline_notebook_staging():
 
     t_cust = task_customers.submit()
     t_emp = task_employees.submit()
@@ -77,5 +77,23 @@ def pipeline_notebook_dw():
     t_ord = task_orders.submit()
     t_det = task_order_details.submit()
 
+    # Resolução de erro
+
+    features = [
+        t_cust,
+        t_emp,
+        t_prod,
+        t_reg,
+        t_ship,
+        t_cat,
+        t_terr,
+        t_emp_terr,
+        t_ord,
+        t_det
+    ]
+
+    for future in features:
+        future.result()
+
 if __name__ == "__main__":
-    pipeline_notebook_dw()
+    pipeline_notebook_staging()

@@ -16,10 +16,24 @@ pull:
 
 
 deployments:
+
   - name: deploy-staging-github
     tags: ["staging", "dw"]
     description: "Pipeline de extração e carga da camada staging"
-    entrypoint: "flows/pipeline_dw.py:pipeline_notebook_dw"
+    entrypoint: "flows/pipeline_staging.py:pipeline_notebook_staging"
+    parameters: {}
+    work_pool:
+      name: default-docker-pool
+      job_variables:
+        #auto_remove: true
+        env:
+          PREFECT_API_URL: "{{ prefect.variables.url_api_interna }}"
+          PYTHONPATH: "{{ clone_step.directory }}:${PYTHONPATH}"
+
+  - name: deploy-transformed-github
+    tags: ["transformed", "dw"]
+    description: "Pipeline de transformação da camada transformed"
+    entrypoint: "flows/pipeline_transformed.py:pipeline_notebook_transform"
     parameters: {}
     work_pool:
       name: default-docker-pool
