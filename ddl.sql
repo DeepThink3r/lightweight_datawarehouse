@@ -1,5 +1,14 @@
----STAGING--
+---Extensões---
+CREATE EXTENSION IF NOT EXISTS citus;
 
+CREATE EXTENSION IF NOT EXISTS citus_columnar;
+
+---Schemas---
+CREATE SCHEMA IF NOT EXISTS staging;
+CREATE SCHEMA IF NOT EXISTS transformed;
+CREATE SCHEMA IF NOT EXISTS mart;
+
+---STAGING--
 CREATE TABLE IF NOT EXISTS staging.customers (
 	CustomerID VARCHAR,
 	CompanyName VARCHAR,
