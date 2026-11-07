@@ -17,7 +17,7 @@ def get_postgres_connection(as_conninfo: bool = True) -> str:
         return uri
 
     parsed = urlparse(uri)
-    port = parsed.port or 5432
+    port = parsed.port
     dbname = parsed.path.lstrip("/")
 
     # Formata como pares chave=valor que a libpq aceita sem ambiguidades
