@@ -21,7 +21,8 @@ from tasks.ext_employeeterritories import extract_employeeterritories
 from tasks.ext_orders import extract_orders
 from tasks.ext_order_details import extract_order_details
 
-# Tasks
+# Tasks Staging
+
 @task(name="staging.customers", retries=2, retry_delay_seconds=10, log_prints=True)
 def task_customers():
     extract_customers()
