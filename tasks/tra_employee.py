@@ -9,14 +9,14 @@ import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
-def transform_employee() -> None:
+def transform_dim_salesman() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.dim_employee;"
+    tb_truncate = "TRUNCATE TABLE transformed.dim_salesman;"
 
     tb_insert = """
-        INSERT INTO transformed.dim_employee (
+        INSERT INTO transformed.dim_salesman (
             employeeid,
             name,
             title
@@ -38,4 +38,4 @@ def transform_employee() -> None:
         conn.commit()
 
 if __name__ == '__main__':
-    transform_employee()
+    transform_dim_salesman()

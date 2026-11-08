@@ -8,17 +8,17 @@ if str(ROOT_DIR) not in sys.path:
 
 from prefect import flow, task
 
-from tasks.tra_employee import transform_employee
+from tasks.tra_employee import transform_dim_salesman
 
 
-@task(name='transformed.employee', retries=2, retry_delay_seconds=10, log_prints=True)
-def task_dim_employee():
-    transform_employee()
+@task(name='transformed.dim_salesman', retries=2, retry_delay_seconds=10, log_prints=True)
+def task_dim_salesman():
+    transform_dim_salesman()
 
 @flow(name='Pipeline transform', log_prints=True)
 def pipeline_notebook_transform():
 
-    t_dim_emp = task_dim_employee.submit()
+    t_dim_emp = transform_dim_salesman.submit()
 
 if '_name__' == "__main__":
     pipeline_notebook_transform()
