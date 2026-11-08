@@ -10,6 +10,7 @@ from prefect import flow, task
 
 from tasks.tra_dim_salesman import transform_dim_salesman
 from tasks.tra_dim_territories import transform_dim_territories
+from tasks.tra_dim_customers import transform_dim_customers
 
 
 @task(name='transformed.dim_salesman', retries=2, retry_delay_seconds=10, log_prints=True)
@@ -20,16 +21,22 @@ def task_dim_salesman():
 def task_dim_territories():
     transform_dim_territories()
 
+@task(name='transformed.dim_customers', retries=2, retry_delay_seconds=10, log_prints=True)
+def task_dim_customers():
+    transform_dim_customers()
+
 
 @flow(name='Pipeline transform', log_prints=True)
 def pipeline_notebook_transform():
 
     t_dim_salesman = task_dim_salesman.submit()
     t_dim__territories = task_dim_territories.submit()
+    t_dim_customers = task_dim_customers.submit()
 
     features = [
         t_dim_salesman,
-        t_dim__territories
+        t_dim__territories,
+        t_dim_customers
     ]
 
     for feature in features:
