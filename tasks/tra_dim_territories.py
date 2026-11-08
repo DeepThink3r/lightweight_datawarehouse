@@ -19,15 +19,19 @@ def transform_dim_territories() -> None:
         INSERT INTO transformed.dim_territories (
             employeeid,
             territoryid,
-            territorydescription
+            territorydescription,
+            regiondescription
         )
         SELECT
             et.employeeid,
             et.territoryid,
-            t.territorydescription 
+            t.territorydescription,
+            r.regiondescription 
         FROM staging.employeeterritories et
-        LEFT JOIN staging.territories t 
+        LEFT join staging.territories t 
             on et.territoryid = t.territoryid
+        LEFT join staging.region r
+            ON t.regionid = r.regionid 
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:

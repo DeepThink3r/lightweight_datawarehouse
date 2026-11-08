@@ -15,7 +15,7 @@ def transform_dim_customers() -> None:
 
     tb_truncate = "TRUNCATE TABLE transformed.dim_customers"
 
-    tb_insert = """"
+    tb_insert = """
         INSERT INTO transformed.dim_customers (
             customerid,
             companyname,
@@ -23,10 +23,11 @@ def transform_dim_customers() -> None:
             city
         )
         SELECT
-            ustomerid,
+            customerid,
             companyname,
             country,
             city
+        from staging.customers
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:
