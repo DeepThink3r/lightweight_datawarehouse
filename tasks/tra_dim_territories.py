@@ -36,7 +36,7 @@ def transform_dim_territories() -> None:
             cur.execute(tb_truncate)
             cur.execute(tb_insert)
 
-        conn.comit()
+        conn.commit()
 
 if __name__ == '__main__':
     transform_dim_territories()
