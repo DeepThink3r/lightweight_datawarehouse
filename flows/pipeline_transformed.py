@@ -24,7 +24,7 @@ def task_dim_territories():
 @flow(name='Pipeline transform', log_prints=True)
 def pipeline_notebook_transform():
 
-    t_dim_salesman = transform_dim_salesman.submit()
+    t_dim_salesman = task_dim_salesman.submit()
     t_dim__territories = task_dim_territories.submit()
 
     features = [
