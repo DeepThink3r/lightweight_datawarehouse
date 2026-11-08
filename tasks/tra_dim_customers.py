@@ -23,7 +23,7 @@ def transform_dim_customers() -> None:
             city
         )
         SELECT
-            ustomerid,
+            customerid,
             companyname,
             country,
             city
