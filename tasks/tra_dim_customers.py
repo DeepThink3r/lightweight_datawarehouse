@@ -27,6 +27,7 @@ def transform_dim_customers() -> None:
             companyname,
             country,
             city
+        from staging.customers
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:
