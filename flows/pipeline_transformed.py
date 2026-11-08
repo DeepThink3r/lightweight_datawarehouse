@@ -35,5 +35,5 @@ def pipeline_notebook_transform():
     for feature in features:
         feature.result()
 
-if '_name__' == "__main__":
+if __name__ == "__main__":
     pipeline_notebook_transform()
