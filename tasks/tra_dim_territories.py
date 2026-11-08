@@ -28,7 +28,6 @@ def transform_dim_territories() -> None:
         FROM staging.employeeterritories et
         LEFT JOIN staging.territories t 
             on et.territoryid = t.territoryid
-    )
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:
