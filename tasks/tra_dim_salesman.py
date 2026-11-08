@@ -6,7 +6,7 @@ if str(root_dir) not in sys.path:
     sys.path.append(str(root_dir))
 
 import polars as pl
-from utils.connections import get_azure_connection, get_postgres_connection
+from utils.connections import get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
 def transform_dim_salesman() -> None:
