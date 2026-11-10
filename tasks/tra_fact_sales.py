@@ -16,6 +16,22 @@ def transform_fact_sales() -> None:
     tb_truncate = "TRUNCATE TABLE transformed.fact_sales"
 
     tb_insert = """
+        INSERT INTO transformed.fact_sales (
+            orderid,
+            customerid,
+            salesmanid,
+            orderdate,
+            requireddate,
+            shippeddate,
+            freight,
+            shipname,
+            leadtime,
+            overdueorders,
+            productid,
+            unitprice,
+            discount,
+            unitpricediscount
+        )
         with convert_type as (
             select
                 o.orderid,
