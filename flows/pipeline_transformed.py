@@ -12,6 +12,7 @@ from tasks.tra_dim_salesman import transform_dim_salesman
 from tasks.tra_dim_territories import transform_dim_territories
 from tasks.tra_dim_customers import transform_dim_customers
 from tasks.tra_dim_products import transform_dim_products
+from tasks.tra_fact_sales import transform_fact_sales
 
 
 @task(name='transformed.dim_salesman', retries=2, retry_delay_seconds=10, log_prints=True)
@@ -30,6 +31,11 @@ def task_dim_customers():
 def task_dim_produtcs():
     transform_dim_products()
 
+@task(name='transformed.fact_sales', retries=2, retry_delay_seconds=10, log_prints=True)
+def task_fact_sales():
+    transform_fact_sales()
+
+
 @flow(name='Pipeline transform', log_prints=True)
 def pipeline_notebook_transform():
 
@@ -37,12 +43,14 @@ def pipeline_notebook_transform():
     t_dim__territories = task_dim_territories.submit()
     t_dim_customers = task_dim_customers.submit()
     t_dim_products = task_dim_produtcs.submit()
+    t_fact_sales = task_fact_sales.submit()
 
     features = [
         t_dim_salesman,
         t_dim__territories,
         t_dim_customers,
-        t_dim_products
+        t_dim_products,
+        t_fact_sales
     ]
 
     for feature in features:
