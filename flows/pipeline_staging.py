@@ -9,16 +9,16 @@ if str(ROOT_DIR) not in sys.path:
 from prefect import flow, task
 
 # Rotinas
-from lightweight_datawarehouse.tasks.stg_categories import extract_categories
-from lightweight_datawarehouse.tasks.stg_customers import extract_customers
-from lightweight_datawarehouse.tasks.stg_employees import extract_employees
-from lightweight_datawarehouse.tasks.stg_products import extract_products
-from lightweight_datawarehouse.tasks.stg_region import extract_region
-from lightweight_datawarehouse.tasks.stg_shippers import extract_shippers
-from lightweight_datawarehouse.tasks.stg_territories import extract_territories
-from lightweight_datawarehouse.tasks.stg_employeeterritories import extract_employeeterritories
-from lightweight_datawarehouse.tasks.stg_orders import extract_orders
-from lightweight_datawarehouse.tasks.stg_order_details import extract_order_details
+from tasks.stg_categories import extract_categories
+from tasks.stg_customers import extract_customers
+from tasks.stg_employees import extract_employees
+from tasks.stg_products import extract_products
+from tasks.stg_region import extract_region
+from tasks.stg_shippers import extract_shippers
+from tasks.stg_territories import extract_territories
+from tasks.stg_employeeterritories import extract_employeeterritories
+from tasks.stg_orders import extract_orders
+from tasks.stg_order_details import extract_order_details
 
 
 #------TASKS STAGING------
