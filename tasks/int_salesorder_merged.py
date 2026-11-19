@@ -13,10 +13,10 @@ def transform_fact_sales() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.fact_sales"
+    tb_truncate = "TRUNCATE TABLE intermediate.salesorder_merged"
 
     tb_insert = """
-        INSERT INTO intermediate.fact_sales (
+        INSERT INTO intermediate.salesorder_merged (
             orderid,
             customerid,
             salesmanid,
@@ -46,8 +46,8 @@ def transform_fact_sales() -> None:
                 CAST(od.unitprice AS DECIMAL) as unitprice,
                 CAST(od.quantity AS DECIMAL) as quantity,
                 CAST(od.discount AS DECIMAL) as discount
-            from staging.orders o
-            inner join staging.order_details od 
+            from staging.northwind_orders o
+            inner join staging.northwind_order_details od 
                 on o.orderid = od.orderid
         ), calculated as (
             select

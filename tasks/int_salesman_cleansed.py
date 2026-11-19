@@ -13,10 +13,10 @@ def transform_dim_salesman() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.dim_salesman;"
+    tb_truncate = "TRUNCATE TABLE intermediate.salesman_cleansed;"
 
     tb_insert = """
-        INSERT INTO intermediate.dim_salesman (
+        INSERT INTO intermediate.salesman_cleansed (
             employeeid,
             name,
             title
@@ -25,7 +25,7 @@ def transform_dim_salesman() -> None:
             employeeid,
             firstname || ' ' || lastname AS name,
             title
-        FROM staging.employees;
+        FROM staging.northwind_employees;
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:

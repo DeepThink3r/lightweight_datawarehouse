@@ -13,10 +13,10 @@ def transform_dim_products() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.dim_products"
+    tb_truncate = "TRUNCATE TABLE intermediate.products_cleansed"
 
     tb_insert = """
-        INSERT INTO intermediate.dim_products (
+        INSERT INTO intermediate.products_cleansed (
             productid,
             productname,
             categoryname
@@ -25,8 +25,8 @@ def transform_dim_products() -> None:
             p.productid,
             p.productname,
             c.categoryname
-        from staging.products p
-        left join staging.categories c
+        from staging.northwind_products p
+        left join staging.northwind_categories c
             ON p.categoryid = c.categoryid       
     """
 
