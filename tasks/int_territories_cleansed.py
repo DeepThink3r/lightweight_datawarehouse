@@ -13,10 +13,10 @@ def transform_dim_territories() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.dim_territories;"
+    tb_truncate = "TRUNCATE TABLE intermediate.territories_cleansed"
 
     tb_insert = """
-        INSERT INTO transformed.dim_territories (
+        INSERT INTO intermediate.territories_cleansed (
             employeeid,
             territoryid,
             territorydescription,
@@ -27,10 +27,10 @@ def transform_dim_territories() -> None:
             et.territoryid,
             t.territorydescription,
             r.regiondescription 
-        FROM staging.employeeterritories et
-        LEFT join staging.territories t 
+        FROM staging.northwind_employeeterritories et
+        LEFT join staging.northwind_territories t 
             on et.territoryid = t.territoryid
-        LEFT join staging.region r
+        LEFT join staging.northwind_region r
             ON t.regionid = r.regionid 
     """
 

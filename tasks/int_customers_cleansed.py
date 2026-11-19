@@ -9,33 +9,34 @@ import polars as pl
 from utils.connections import get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
-def transform_dim_salesman() -> None:
+def transform_dim_customers() -> None:
 
     uri_connection_pgsql = get_postgres_connection()
 
-    tb_truncate = "TRUNCATE TABLE transformed.dim_salesman;"
+    tb_truncate = "TRUNCATE TABLE intermediate.customers_cleansed"
 
     tb_insert = """
-        INSERT INTO transformed.dim_salesman (
-            employeeid,
-            name,
-            title
+        INSERT INTO intermediate.customers_cleansed (
+            customerid,
+            companyname,
+            country,
+            city
         )
         SELECT
-            employeeid,
-            firstname || ' ' || lastname AS name,
-            title
-        FROM staging.employees;
+            customerid,
+            companyname,
+            country,
+            city
+        from staging.northwind_customers
     """
 
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
 
             cur.execute(tb_truncate)
-
             cur.execute(tb_insert)
 
         conn.commit()
 
 if __name__ == '__main__':
-    transform_dim_salesman()
+    transform_dim_customers()

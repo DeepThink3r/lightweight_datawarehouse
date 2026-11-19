@@ -10,36 +10,43 @@ from utils.connections import get_azure_connection, get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
 
-def extract_territories() -> None:
-
+def extract_customers() -> None:
     uri_connection_azsql = get_azure_connection()
     uri_connection_pgsql = get_postgres_connection()
 
-
-    ext_query="""
+    # Deixa o timestamp para o DEFAULT CURRENT_TIMESTAMP do Postgres
+    ext_query = """
                 SELECT 
                     a.*,
-                    'dbo.nowrthwind' as origem
-                FROM territories a;
+                    'dbo.northwind' AS origem
+                FROM Customers a;
                 """
 
-    df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
+    df = pl.read_database_uri(
+        query=ext_query,
+        uri=uri_connection_azsql,
+        engine="connectorx"
+    )
 
+   
     df = df.rename({col: col.lower() for col in df.columns})
 
+  
     df = df.cast(pl.String)
 
+  
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE staging.territories")
+            cur.execute("TRUNCATE TABLE staging.northwind_customers;")
         conn.commit()
 
         df.write_database(
-            table_name='staging.territories',
+            table_name='staging.northwind_customers',
             connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
 
-if '__name__' == '__main__':
-    extract_territories()
+
+if __name__ == '__main__':
+    extract_customers()

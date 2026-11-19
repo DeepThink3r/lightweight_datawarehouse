@@ -8,11 +8,11 @@ if str(ROOT_DIR) not in sys.path:
 
 from prefect import flow, task
 
-from tasks.tra_dim_salesman import transform_dim_salesman
-from tasks.tra_dim_territories import transform_dim_territories
-from tasks.tra_dim_customers import transform_dim_customers
-from tasks.tra_dim_products import transform_dim_products
-from tasks.tra_fact_sales import transform_fact_sales
+from tasks.int_salesman_cleansed import transform_dim_salesman
+from tasks.int_territories_cleansed import transform_dim_territories
+from tasks.int_customers_cleansed import transform_dim_customers
+from tasks.int_products_cleansed import transform_dim_products
+from tasks.int_salesorder_merged import transform_fact_sales
 
 
 @task(name='transformed.dim_salesman', retries=2, retry_delay_seconds=10, log_prints=True)

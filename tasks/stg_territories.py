@@ -9,43 +9,37 @@ import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
-def extract_categories() -> None:
+
+def extract_territories() -> None:
 
     uri_connection_azsql = get_azure_connection()
     uri_connection_pgsql = get_postgres_connection()
 
 
-    ext_query = """SELECT 
-                    CategoryID,
-                    CategoryName,
-                    Description,
-                    'dbo.nowrthwind' AS origem
-                FROM categories
+    ext_query="""
+                SELECT 
+                    a.*,
+                    'dbo.nowrthwind' as origem
+                FROM territories a;
                 """
 
-
-    df = pl.read_database_uri(query=ext_query, 
-                            uri=uri_connection_azsql, 
-                            engine="connectorx")
-
+    df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
 
     df = df.rename({col: col.lower() for col in df.columns})
 
     df = df.cast(pl.String)
 
-    #Limpa a tabela
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE staging.categories")
+            cur.execute("TRUNCATE TABLE staging.northwind_territories")
         conn.commit()
 
-    # Carrega os dados
         df.write_database(
-            table_name='staging.categories',
+            table_name='staging.northwind_territories',
             connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
 
-if __name__ == "__main__":
-    extract_categories()
+if __name__ == '__main__':
+    extract_territories()

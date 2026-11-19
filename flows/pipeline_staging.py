@@ -9,16 +9,16 @@ if str(ROOT_DIR) not in sys.path:
 from prefect import flow, task
 
 # Rotinas
-from tasks.ext_categories import extract_categories
-from tasks.ext_customers import extract_customers
-from tasks.ext_employees import extract_employees
-from tasks.ext_products import extract_products
-from tasks.ext_region import extract_region
-from tasks.ext_shippers import extract_shippers
-from tasks.ext_territories import extract_territories
-from tasks.ext_employeeterritories import extract_employeeterritories
-from tasks.ext_orders import extract_orders
-from tasks.ext_order_details import extract_order_details
+from tasks.stg_categories import extract_categories
+from tasks.stg_customers import extract_customers
+from tasks.stg_employees import extract_employees
+from tasks.stg_products import extract_products
+from tasks.stg_region import extract_region
+from tasks.stg_shippers import extract_shippers
+from tasks.stg_territories import extract_territories
+from tasks.stg_employeeterritories import extract_employeeterritories
+from tasks.stg_orders import extract_orders
+from tasks.stg_order_details import extract_order_details
 
 
 #------TASKS STAGING------
