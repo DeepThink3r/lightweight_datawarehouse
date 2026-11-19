@@ -9,8 +9,7 @@ import polars as pl
 from utils.connections import get_azure_connection, get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
-
-def extract_employeeterritories() -> None:
+def extract_employees() -> None:
 
     uri_connection_azsql = get_azure_connection()
     uri_connection_pgsql = get_postgres_connection()
@@ -18,12 +17,30 @@ def extract_employeeterritories() -> None:
 
     ext_query="""
                 SELECT 
-                    a.*,
+                    EmployeeID,
+                    LastName,
+                    FirstName,
+                    Title,
+                    TitleOfCourtesy,
+                    BirthDate,
+                    HireDate,
+                    Address,
+                    City,
+                    Region,
+                    PostalCode,
+                    Country,
+                    HomePhone,
+                    Extension,
+                    Notes,
+                    ReportsTo,
+                    PhotoPath,
                     'dbo.nowrthwind' as origem
-                FROM EmployeeTerritories a;
+                FROM employees a;
                 """
 
+
     df = pl.read_database_uri(query=ext_query,uri=uri_connection_azsql,engine="connectorx")
+
 
     df = df.rename({col: col.lower() for col in df.columns})
 
@@ -31,16 +48,16 @@ def extract_employeeterritories() -> None:
 
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE staging.employeeterritories")
+            cur.execute("TRUNCATE TABLE staging.northwind_employees;")
         conn.commit()
 
         df.write_database(
-            table_name='staging.employeeterritories',
+            table_name='staging.northwind_employees',
             connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
 
-if '__name__' == '__main__':
-    extract_employeeterritories()
 
+if __name__ == "__main__":
+    extract_employees()

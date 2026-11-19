@@ -30,15 +30,15 @@ def extract_region() -> None:
 
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE staging.region")
+            cur.execute("TRUNCATE TABLE staging.northwind_region")
         conn.commit()
 
         df.write_database(
-            table_name='staging.region',
+            table_name='staging.northwind_region',
             connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
 
-if '__name__' == '__main__':
+if __name__ == '__main__':
     extract_region()

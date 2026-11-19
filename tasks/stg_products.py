@@ -10,7 +10,7 @@ from utils.connections import get_azure_connection, get_postgres_connection
 from adbc_driver_postgresql import dbapi
 
 
-def extract_shippers() -> None:
+def extract_products() -> None:
 
     uri_connection_azsql = get_azure_connection()
     uri_connection_pgsql = get_postgres_connection()
@@ -20,7 +20,7 @@ def extract_shippers() -> None:
                 SELECT 
                     a.*,
                     'dbo.nowrthwind' as origem
-                FROM shippers a;
+                FROM products a;
                 """
 
 
@@ -32,15 +32,15 @@ def extract_shippers() -> None:
 
     with dbapi.connect(uri_connection_pgsql) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE staging.shippers")
+            cur.execute("TRUNCATE TABLE staging.northwind_products")
         conn.commit()
 
         df.write_database(
-            table_name='staging.shippers',
+            table_name='staging.northwind_products',
             connection=conn,
             engine="adbc",
             if_table_exists="append"
         )
 
-if '__name__' == '__main__':
-    extract_shippers()
+if __name__ == '__main__':
+    extract_products()
