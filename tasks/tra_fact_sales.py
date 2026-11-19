@@ -16,7 +16,7 @@ def transform_fact_sales() -> None:
     tb_truncate = "TRUNCATE TABLE transformed.fact_sales"
 
     tb_insert = """
-        INSERT INTO transformed.fact_sales (
+        INSERT INTO intermediate.fact_sales (
             orderid,
             customerid,
             salesmanid,

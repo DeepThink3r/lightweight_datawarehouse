@@ -16,7 +16,7 @@ def transform_dim_customers() -> None:
     tb_truncate = "TRUNCATE TABLE transformed.dim_customers"
 
     tb_insert = """
-        INSERT INTO transformed.dim_customers (
+        INSERT INTO intermediate.dim_customers (
             customerid,
             companyname,
             country,

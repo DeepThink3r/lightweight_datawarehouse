@@ -16,7 +16,7 @@ def transform_dim_territories() -> None:
     tb_truncate = "TRUNCATE TABLE transformed.dim_territories;"
 
     tb_insert = """
-        INSERT INTO transformed.dim_territories (
+        INSERT INTO intermediate.dim_territories (
             employeeid,
             territoryid,
             territorydescription,
